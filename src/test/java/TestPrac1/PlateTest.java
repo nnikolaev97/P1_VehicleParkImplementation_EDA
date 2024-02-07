@@ -16,7 +16,7 @@ class PlateTest {
 
     @Test
     void testEquals() {
-        Plate testPlate = new Plate(4 , "0234", "ree");
+        Plate testPlate = new Plate(5 , "0234", "ree");
         Plate tesPlate2 = new Plate(5 , "0234", "ree");
         assertTrue(testPlate.equals(tesPlate2));
     }
