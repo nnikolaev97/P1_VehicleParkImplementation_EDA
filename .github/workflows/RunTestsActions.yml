@@ -28,15 +28,15 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      run: mvn test --logger "trx;LogFileName=test-results.trx" || true
+      run: mvn test  #--logger "trx;LogFileName=test-results.trx" || true
       
-    - name: Test Report
-      uses: dorny/test-reporter@v1
-      if: always()
-      with:
-        name: DotNET Tests
-        path: "**/test-results.trx"
-        reporter: dotnet.trx
-        fail-on-error: true
+   # - name: Test Report
+    #  uses: dorny/test-reporter@v1
+   #    if: always()
+   #    with:
+    #     name: DotNET Tests
+   #      path: "**/test-results.trx"
+     #    reporter: dotnet.trx
+    #     fail-on-error: true
         
     
