@@ -27,16 +27,12 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-    - name: Build with Maven
-      run: mvn test 
-      
-    - name: Test Report
-      uses: dorny/test-reporter@v1
+        
+    - name: Build and Run Tests
+      run: mvn test --batch-mode --fail-at-end
+    - name: Publish Test Report
       if: success() || failure()
-      with:
-        name: JEST Tests
-        path: "target/surefire-reports/TEST-TestPrac1.PlateTest.xml"
-        reporter: jest-junit
+      uses: scacap/action-surefire-report@v1
      
         
     
