@@ -36,7 +36,7 @@ jobs:
    #    with:
     #     name: DotNET Tests
    #      path: "**/test-results.trx"
-     #    reporter: jest-junit
+     #    reporter: dotnet.trx
     #     fail-on-error: true
         
     
