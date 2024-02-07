@@ -52,30 +52,30 @@ public class Test_VP {
 			allVehicles.add(comms[i]);
 		}
 		
-		// inserciÛ de vehicles 1 a 1. No s'esperen excepcions
-		provar("InserciÛ amb enter(Vehicle)");
+		// inserci√≥ de vehicles 1 a 1. No s'esperen excepcions
+		provar("Inserci√≥ amb enter(Vehicle)");
 		try {
 			Arrays.stream(privs).forEach(p->vp.enter(p));
 		}
 		catch (Exception e) {
 			notificarExcepcio(e, SORTIR);
 		}
-		informar("InserciÛ amb enter(Vehicle) finalitzada");
+		informar("Inserci√≥ amb enter(Vehicle) finalitzada");
 		
-		// inserciÛ de vehicles amb Collection. No s'esperen excepcions
-		provar("InserciÛ amb enter(Collection)");
+		// inserci√≥ de vehicles amb Collection. No s'esperen excepcions
+		provar("Inserci√≥ amb enter(Collection)");
 		try {
 			vp.enter(Arrays.asList(comms));
 		}
 		catch (Exception e) {
 			notificarExcepcio(e, SORTIR);
 		}
-		informar("InserciÛ amb enter(Collection) finalitzada");
+		informar("Inserci√≥ amb enter(Collection) finalitzada");
 
 		
 		// verifiquem que tenim totes les matricules que hem de tenir
 		// no s'esperen excepcions
-		provar("In park per a matrÌcules de vehicles inserits");
+		provar("In park per a matr√≠cules de vehicles inserits");
 		try  {
 			for (Plate p : plates) {
 				if (!vp.inPark(p)) {
@@ -86,10 +86,10 @@ public class Test_VP {
 		catch (Exception e) {
 			notificarExcepcio(e, SORTIR);
 		}
-		informar("In park per a matrÌcules de vehicles inserits aparentment ok");
+		informar("In park per a matr√≠cules de vehicles inserits aparentment ok");
 		
-		// verifiquem que inPark no respon true per matrÌcules inexistents
-		provar("In park per a matrÌcules de vehicles NO inserits");
+		// verifiquem que inPark no respon true per matr√≠cules inexistents
+		provar("In park per a matr√≠cules de vehicles NO inserits");
 		try  {
 			for (Plate p : unknown) {
 				if (vp.inPark(p)) {
@@ -100,10 +100,10 @@ public class Test_VP {
 		catch (Exception e) {
 			notificarExcepcio(e, SORTIR);
 		}
-		informar("In park per a matrÌcules de vehicles NO inserits aparentment ok");
+		informar("In park per a matr√≠cules de vehicles NO inserits aparentment ok");
 		
-		// provem leave amb matrÌcules que no hi sÛn
-		provar ("Leave amb par‡metre plate. MatrÌcules inexistents");
+		// provem leave amb matr√≠cules que no hi s√≥n
+		provar ("Leave amb par√†metre plate. Matr√≠cules inexistents");
 		try {
 			for (Plate p: unknown) {
 				if (vp.leave(p))
@@ -113,11 +113,11 @@ public class Test_VP {
 		catch(Exception e) {
 			notificarExcepcio(e, SORTIR);
 		}
-		informar ("Leave amb par‡metre plate. MatrÌcules inexistents. Aparentment correcte");
+		informar ("Leave amb par√†metre plate. Matr√≠cules inexistents. Aparentment correcte");
 		
 		
-		// provem leave amb matrÌcules que sÌ hi son...
-		provar ("Leave amb par‡metre plate. MatrÌcules existents");
+		// provem leave amb matr√≠cules que s√≠ hi son...
+		provar ("Leave amb par√†metre plate. Matr√≠cules existents");
 		try {
 			for (Vehicle v: comms) {
 				if (!vp.leave((Plate)v.getPlate().clone()))
@@ -127,11 +127,11 @@ public class Test_VP {
 		catch (Exception e)  {
 			notificarExcepcio(e, SORTIR);
 		}
-		informar ("Leave amb par‡metre plate. MatrÌcules existents. Aparentment correcte");
+		informar ("Leave amb par√†metre plate. Matr√≠cules existents. Aparentment correcte");
 		
-		// verificar amb InPark que les matrÌcules ja no hi sÛn
-		// verifiquem que inPark no respon true per matrÌcules inexistents
-		provar("In park per a matrÌcules de vehicles ELIMINATS");
+		// verificar amb InPark que les matr√≠cules ja no hi s√≥n
+		// verifiquem que inPark no respon true per matr√≠cules inexistents
+		provar("In park per a matr√≠cules de vehicles ELIMINATS");
 		try  {
 			for (Vehicle v : comms) {
 				if (vp.inPark(v.getPlate())) {
@@ -142,34 +142,34 @@ public class Test_VP {
 		catch (Exception e) {
 			notificarExcepcio(e, SORTIR);
 		}
-		informar("In park per a matrÌcules de vehicles ELIMINATS aparentment ok");
+		informar("In park per a matr√≠cules de vehicles ELIMINATS aparentment ok");
 
 		
 		// retornem a l'estat anterior a leave...
-		// inserciÛ de vehicles amb Collection. No s'esperen excepcions
-		provar("InserciÛ amb enter(Collection) segona volta");
+		// inserci√≥ de vehicles amb Collection. No s'esperen excepcions
+		provar("Inserci√≥ amb enter(Collection) segona volta");
 		try {
 					vp.enter(Arrays.asList(comms));
 		}
 		catch (Exception e) {
 				notificarExcepcio(e, SORTIR);
 		}
-		informar("InserciÛ amb enter(Collection) segona volta finalitzada");
+		informar("Inserci√≥ amb enter(Collection) segona volta finalitzada");
 		
 		// provem la versio "by owner" de leave
-		provar("Leave amb par‡metre owner (String)");
+		provar("Leave amb par√†metre owner (String)");
 		try {
 			Collection<Vehicle> removed = Arrays.asList(vp.leave(new String("Joan".toCharArray())));
 			// check that removed contains all the cars that belong to Joan...
 			for (Vehicle v : allVehicles) {
 				if (v.getOwner().equals("Joan")) {
 					if (!removed.contains(v))
-						notificarError("El contingut retornat per leave no Ès correcte", SORTIR);
+						notificarError("El contingut retornat per leave no √©s correcte", SORTIR);
 				}
 			}
 			//... and nothing more
 			if (removed.size()!=4)
-				notificarError("La mida del resultat retornat per leave no Ès correcta", SORTIR);
+				notificarError("La mida del resultat retornat per leave no √©s correcta", SORTIR);
 			
 			// check that the cars that belong to Joan are no longer in vp
 			for (Vehicle v : allVehicles) {
@@ -185,7 +185,7 @@ public class Test_VP {
 		catch (Exception e) {
 			notificarExcepcio(e, SORTIR);
 		}
-		informar("Leave amb par‡metre owner (String). Aparentment ok");
+		informar("Leave amb par√†metre owner (String). Aparentment ok");
 		
 		// provem containsDangerousPayload
 		provar ("containsDangerousPayload");
@@ -202,14 +202,14 @@ public class Test_VP {
 		informar("containsDangerousPayload aparentment correcte");
 		
 		// enter (v1) amb repeticions
-		provar("InserciÛ (enter) amb repeticions");
+		provar("Inserci√≥ (enter) amb repeticions");
 		try {
 			vp.enter(comms[2]);
 			vp.enter(privs[0]);
-			notificarError("enter no ha llanÁat AlreadySotoredException per a vehicles reptits", SORTIR);
+			notificarError("enter no ha llan√ßat AlreadySotoredException per a vehicles reptits", SORTIR);
 		}
 		catch(AlreadyStoredException e) {
-			// aquest Ès el comportament esperat
+			// aquest √©s el comportament esperat
 		}
 		catch (Exception e) {
 			notificarExcepcio(e, SORTIR);
@@ -217,12 +217,12 @@ public class Test_VP {
 		informar("enter (v1) amb repeticions, comportament aparentment correcte");
 		
 		// enter (v1) amb nulls
-		provar("InserciÛ (enter) amb nulls");
+		provar("Inserci√≥ (enter) amb nulls");
 		try {
 			vp.enter((Vehicle)null);
-			notificarError("enter no ha llanÁat NullPointerException per a vehicle null", SORTIR);
+			notificarError("enter no ha llan√ßat NullPointerException per a vehicle null", SORTIR);
 		} catch (NullPointerException e) {
-			// aquest Ès el comportament esperat
+			// aquest √©s el comportament esperat
 		} catch (Exception e) {
 			notificarExcepcio(e, SORTIR);
 		}
@@ -230,7 +230,7 @@ public class Test_VP {
 		
 		
 		// enter v2 amb nulls, no vehicles i repeticions
-		provar ("InserciÛ (enter) v2 amb 'patologies'");
+		provar ("Inserci√≥ (enter) v2 amb 'patologies'");
 		Collection col = new ArrayList();
 		col.add(null); col.add(comms[0]);
 		col.add("a string");
@@ -246,7 +246,7 @@ public class Test_VP {
 		catch (Exception e) {
 			notificarExcepcio(e, SORTIR);
 		}
-		informar ("InserciÛ (enter) v2 amb 'patologies' aparentement correcte");
+		informar ("Inserci√≥ (enter) v2 amb 'patologies' aparentement correcte");
 		
 		//----------------------
 		System.out.println();
