@@ -9,15 +9,34 @@ class PlateTest {
 
     @Test
     void compareTo() {
-        Plate testPlate = new Plate(5 , "0234", "ree");
-        Plate tesplateRe = new Plate(4 , "0234", "ree");
-        assertEquals(1, testPlate.compareTo(tesplateRe));
+
+        Plate testPlateByAreaCode = new Plate(6 , "0234", "ARD");
+        Plate testPlateByAreaCodeCompared = new Plate(4 , "0234", "ARD");
+
+        Plate testPlateByPrefix = new Plate(4 , "3234", "ACD");
+        Plate testPlateByPrefixCompared = new Plate(4 , "2234", "PRQ");
+
+        Plate testPlateBySufix = new Plate(4 , "0000", "PCD");
+        Plate testPlateBySufixCompared = new Plate(4 , "0000", "ORQ");
+
+        Plate testPlateBySufixCaseSentive = new Plate(4 , "0000", "pCD");
+        Plate testPlateBySufixCaseSensitiveCompared = new Plate(4 , "0000", "ORQ");
+
+        assertEquals(1, testPlateByAreaCode.compareTo(testPlateByAreaCodeCompared));
+        assertEquals(1, testPlateByPrefix.compareTo(testPlateByPrefixCompared));
+        assertEquals(1, testPlateBySufix.compareTo(testPlateBySufixCompared));
+        assertEquals(1, testPlateBySufixCaseSentive.compareTo(testPlateBySufixCaseSensitiveCompared));
     }
 
     @Test
     void testEquals() {
-        Plate testPlate = new Plate(5 , "0234", "ree");
-        Plate tesPlate2 = new Plate(5 , "0234", "ree");
-        assertTrue(testPlate.equals(tesPlate2));
+        Plate testPlateEquals = new Plate(5 , "0234", "ACD");
+        Plate tesPlateEqualsCompared = new Plate(5 , "0234", "ACD");
+
+        Plate testPlateEqualsCaseSensitive = new Plate(5 , "0234", "ACD");
+        Plate tesPlateEqualsCaseSenstiveCompared = new Plate(5 , "0234", "acd");
+
+        assertTrue(testPlateEquals.equals(tesPlateEqualsCompared));
+        assertTrue(testPlateEqualsCaseSensitive.equals(tesPlateEqualsCaseSenstiveCompared));
     }
 }
