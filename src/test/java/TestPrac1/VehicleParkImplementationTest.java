@@ -1,15 +1,9 @@
 package TestPrac1;
 
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import prac1.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,6 +24,7 @@ class VehicleParkImplementationTest {
             new Plate (4, "0488", "JKP"), //3
             new Plate (4, "8745", "AAC"), //4
             new Plate (5, "5239", "BRN"), //5
+            new Plate (6, "9157", "UTH"), //6
             new Plate (1, "6478", "ALP"), //7
             new Plate (1, "0254", "ATC"), //8
             new Plate (3, "1215", "KMD"), //9
@@ -42,28 +37,32 @@ class VehicleParkImplementationTest {
             "Carles", "Maria", "Marta", "Pere", "Joan", "Joan"
     };
 
+    static PrivateVehicle [] privs = new PrivateVehicle [6];
+    static CommercialVehicle [] comms = new CommercialVehicle [6];
+
+    static ArrayList<Vehicle> allVehicles = new ArrayList();
     static VehiclePark vp = new VehicleParkImplementation();
-        static{
-            vp.enter(new PrivateVehicle(plates[0], 10, owners[2], 4, 4));
-            vp.enter(new PrivateVehicle(plates[1], 10, owners[2], 4, 4));
-            vp.enter(new PrivateVehicle(plates[2], 10, owners[1], 4, 4));
-            vp.enter(new PrivateVehicle(plates[3], 10, owners[0], 4, 4));
+
+    static Plate aPlate = new Plate(3, "8978", "RTY");
+
+
+    @BeforeAll
+    static void setUp() {
+
+        for (int i=0; i<6; i++) {
+            privs[i] = new PrivateVehicle(plates[i], 10, owners[i], 4,4 );
+            allVehicles.add(privs[i]);
+        }
+        for (int i=0; i<6; i++) {
+            comms[i] = new CommercialVehicle(plates[i+6], 10, owners[i+6], 750, false);
+            allVehicles.add(comms[i]);
         }
 
-    static PrivateVehicle [] privs = new PrivateVehicle [2];
-        static{
-            privs[0] = new PrivateVehicle(plates[4], 10, owners[2], 4, 4);
-            privs[1] = new PrivateVehicle(plates[5], 10, owners[2], 4, 4);
-    }
-    static CommercialVehicle [] comms = new CommercialVehicle [4];
-        static{
-            comms[0] = new CommercialVehicle(plates[6], 10, owners[2], 750, false);
-            comms[1] = new CommercialVehicle(plates[7], 10, owners[2], 750, false);
-            comms[2] = new CommercialVehicle(plates[8], 10, owners[1], 750, false);
-            comms[3] = new CommercialVehicle(plates[9], 10, owners[0], 750, true);
+        vp.enter(Arrays.asList(comms));
+        Arrays.stream(privs).forEach(p->vp.enter(p));
+
     }
     @Test
-    @Order(1)
     void inPark() {
 
         assertFalse(vp.inPark(unknown[0]),"This plate should not be already in the park");
@@ -79,7 +78,6 @@ class VehicleParkImplementationTest {
     }
 
     @Test
-    @Order(2)
     void enter() {
 
         NullPointerException exceptionNull = assertThrows(NullPointerException.class, () -> {
@@ -89,7 +87,6 @@ class VehicleParkImplementationTest {
             vp.enter(new PrivateVehicle(plates[1], 10, owners[2], 4, 4));
         });
 
-
         assertEquals("Null parameter", exceptionNull.getMessage(), "Exception message should match");
         assertEquals("Already there", exceptionStored.getMessage(), "Exception message should match");
 
@@ -97,7 +94,6 @@ class VehicleParkImplementationTest {
     }
 
     @Test
-    @Order(3)
     void testEnter() {
 
         Collection colStored = new ArrayList();
@@ -105,15 +101,15 @@ class VehicleParkImplementationTest {
         colStored.addAll(Arrays.asList(privs));
         colStored.addAll(Arrays.asList(comms));
         colStored.add(null);
+        colStored.add(new PrivateVehicle(aPlate, 5, "Carla", 4, 4));
 
         int stored = vp.enter(colStored);
 
-        assertEquals(6, stored, "You added more or less than the required amount");
+        assertEquals(1, stored, "You added more or less than the required amount");
 
     }
 
     @Test
-    @Order(4)
     void leave() {
 
           assertFalse(vp.leave(unknown[0]), "This plate was never added in Vehiclepark");
@@ -129,22 +125,24 @@ class VehicleParkImplementationTest {
     }
 
     @Test
-    @Order(5)
     void testLeave() {
 
-            assertEquals(5, vp.leave(owners[2]).length, "The removed vehicles should have the same owner name");
-            assertEquals(0, vp.leave(owners[3]).length, "You should've removed 0 vehicles");
+            assertEquals(4, vp.leave(owners[2]).length, "The removed vehicles should have the same owner name");
+            assertEquals(0, vp.leave(owners[2]).length, "You should've removed 2 vehicles");
+
+            //Retornem Vehicles
+            vp.enter(new PrivateVehicle(plates[0], 10, owners[0], 4,4 ));
+            vp.enter(new PrivateVehicle(plates[2], 10, owners[2], 4,4 ));
+            vp.enter(new CommercialVehicle(plates[10], 10, owners[10], 750, false));
+            vp.enter(new CommercialVehicle(plates[11], 10, owners[11], 750, false));
 
     }
 
     @Test
-    @Order(6)
     void containsDangerousPayload() {
 
-            VehiclePark vpDangerous = new VehicleParkImplementation();
-            vpDangerous.enter(comms[3]);
-
             assertFalse(vp.containsDangerousPayload(), "There should be no dangerous payload in Vehiclepark");
-            assertTrue(vpDangerous.containsDangerousPayload(), "This VehiclePark should be dangerous");
+            comms[3].setDangerousPayload(true);
+            assertTrue(vp.containsDangerousPayload(), "VehiclePark should be dangerous");
     }
 }
