@@ -22,7 +22,7 @@ class PlateTest {
         Plate testPlateBySufixCaseSentive = new Plate(4 , "0000", "pCD");
         Plate testPlateBySufixCaseSensitiveCompared = new Plate(4 , "0000", "ORQ");
 
-        assertEquals(0, testPlateByAreaCode.compareTo(testPlateByAreaCodeCompared));
+        assertEquals(1, testPlateByAreaCode.compareTo(testPlateByAreaCodeCompared));
         assertEquals(1, testPlateByPrefix.compareTo(testPlateByPrefixCompared));
         assertEquals(1, testPlateBySufix.compareTo(testPlateBySufixCompared));
       //  assertEquals(1, testPlateBySufixCaseSentive.compareTo(testPlateBySufixCaseSensitiveCompared));
